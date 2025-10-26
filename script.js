@@ -55,6 +55,13 @@ const fishData = {
         goodTempRange: [50, 75],
         prefersOvercast: true,
         activityLevel: 'medium'
+    },
+    'yellow-perch': {
+        name: 'Yellow Perch',
+        optimalTempRange: [55, 68],
+        goodTempRange: [50, 72],
+        prefersOvercast: true,
+        activityLevel: 'high'
     }
 };
 

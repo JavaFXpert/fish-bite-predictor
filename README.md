@@ -4,7 +4,7 @@ An interactive web application that predicts fish biting activity for Indiana ga
 
 ## Features
 
-- **8 Indiana Game Fish Species**: Select from Largemouth Bass, Smallmouth Bass, Crappie, Bluegill, Catfish, Walleye, Northern Pike, and Muskie
+- **9 Indiana Game Fish Species**: Select from Largemouth Bass, Smallmouth Bass, Crappie, Bluegill, Catfish, Walleye, Northern Pike, Muskie, and Yellow Perch
 - **Real-time Weather Data**: Fetches current weather conditions based on your location including:
   - Air temperature
   - Estimated water temperature
@@ -105,6 +105,11 @@ The app uses a scoring system that evaluates multiple weather factors:
 - Optimal Water Temp: 55-70°F
 - Prefers overcast conditions
 - Medium activity level
+
+### Yellow Perch
+- Optimal Water Temp: 55-68°F
+- Prefers overcast conditions
+- High activity level
 
 ## Limitations
 
