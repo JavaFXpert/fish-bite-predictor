@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indiana Fish Bite Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎣 Indiana Fish Bite Predictor</h1>
+            <p class="subtitle">Find out if your favorite fish are biting based on current weather conditions</p>
+        </header>
+
+        <div class="location-section">
+            <button id="getLocationBtn" class="btn-primary">
+                <span class="icon">📍</span> Get My Location & Weather
+            </button>
+            <p id="locationDisplay" class="location-text"></p>
+        </div>
+
+        <div class="main-content">
+            <!-- Fish Selection -->
+            <div class="card">
+                <h2>Select Your Target Fish</h2>
+                <div class="fish-selector">
+                    <label class="fish-option">
+                        <input type="radio" name="fish" value="largemouth-bass" checked>
+                        <span class="fish-card">
+                            <span class="fish-name">Largemouth Bass</span>
+                            <span class="fish-info">Active in 60-75°F</span>
+                        </span>
+                    </label>
+                    <label class="fish-option">
+                        <input type="radio" name="fish" value="smallmouth-bass">
+                        <span class="fish-card">
+                            <span class="fish-name">Smallmouth Bass</span>
+                            <span class="fish-info">Active in 55-70°F</span>
+                        </span>
+                    </label>
+                    <label class="fish-option">
+                        <input type="radio" name="fish" value="crappie">
+                        <span class="fish-card">
+                            <span class="fish-name">Crappie</span>
+                            <span class="fish-info">Active in 55-70°F</span>
+                        </span>
+                    </label>
+                    <label class="fish-option">
+                        <input type="radio" name="fish" value="bluegill">
+                        <span class="fish-card">
+                            <span class="fish-name">Bluegill</span>
+                            <span class="fish-info">Active in 65-80°F</span>
+                        </span>
+                    </label>
+                    <label class="fish-option">
+                        <input type="radio" name="fish" value="catfish">
+                        <span class="fish-card">
+                            <span class="fish-name">Catfish</span>
+                            <span class="fish-info">Active in 70-85°F</span>
+                        </span>
+                    </label>
+                    <label class="fish-option">
+                        <input type="radio" name="fish" value="walleye">
+                        <span class="fish-card">
+                            <span class="fish-name">Walleye</span>
+                            <span class="fish-info">Active in 50-65°F</span>
+                        </span>
+                    </label>
+                    <label class="fish-option">
+                        <input type="radio" name="fish" value="northern-pike">
+                        <span class="fish-card">
+                            <span class="fish-name">Northern Pike</span>
+                            <span class="fish-info">Active in 50-65°F</span>
+                        </span>
+                    </label>
+                    <label class="fish-option">
+                        <input type="radio" name="fish" value="muskie">
+                        <span class="fish-card">
+                            <span class="fish-name">Muskie</span>
+                            <span class="fish-info">Active in 55-70°F</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Current Weather Conditions -->
+            <div class="card">
+                <h2>Current Weather Conditions</h2>
+                <div id="weatherData" class="weather-grid">
+                    <div class="weather-item">
+                        <span class="weather-label">Air Temperature</span>
+                        <span id="airTemp" class="weather-value">--</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">Water Temperature (Est.)</span>
+                        <span id="waterTemp" class="weather-value">--</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">Barometric Pressure</span>
+                        <span id="pressure" class="weather-value">--</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">Pressure Trend</span>
+                        <span id="pressureTrend" class="weather-value">--</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">Wind Speed</span>
+                        <span id="windSpeed" class="weather-value">--</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">Precipitation</span>
+                        <span id="precipitation" class="weather-value">--</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">Cloud Cover</span>
+                        <span id="cloudCover" class="weather-value">--</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">Conditions</span>
+                        <span id="conditions" class="weather-value">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction Result -->
+            <div class="card prediction-card">
+                <h2>Bite Prediction</h2>
+                <div id="predictionResult" class="prediction-result">
+                    <p class="instruction">Select a fish species and fetch your location to get a prediction</p>
+                </div>
+                <div id="predictionDetails" class="prediction-details"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Weather data provided by Open-Meteo API</p>
+            <p class="disclaimer">Note: Predictions are based on general fishing conditions and local knowledge may vary</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
