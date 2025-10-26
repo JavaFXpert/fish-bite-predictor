@@ -71,11 +71,21 @@ let selectedFish = 'largemouth-bass';
 
 // DOM Elements
 const getLocationBtn = document.getElementById('getLocationBtn');
+const searchCityBtn = document.getElementById('searchCityBtn');
+const cityInput = document.getElementById('cityInput');
 const locationDisplay = document.getElementById('locationDisplay');
 const fishOptions = document.querySelectorAll('input[name="fish"]');
 
 // Event Listeners
 getLocationBtn.addEventListener('click', getUserLocation);
+searchCityBtn.addEventListener('click', searchByCity);
+
+// Allow Enter key in city input
+cityInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        searchByCity();
+    }
+});
 
 fishOptions.forEach(option => {
     option.addEventListener('change', (e) => {
@@ -106,13 +116,70 @@ function getUserLocation() {
             console.error('Error getting location:', error);
             alert('Unable to get your location. Please enable location services.');
             getLocationBtn.disabled = false;
-            getLocationBtn.innerHTML = '<span class="icon">📍</span> Get My Location & Weather';
+            getLocationBtn.innerHTML = '<span class="icon">📍</span> Use Current Location';
         }
     );
 }
 
+// Search by city name
+async function searchByCity() {
+    const cityName = cityInput.value.trim();
+
+    if (!cityName) {
+        alert('Please enter a city name');
+        return;
+    }
+
+    searchCityBtn.disabled = true;
+    searchCityBtn.innerHTML = '<span class="spinner"></span> Searching...';
+
+    try {
+        const coordinates = await geocodeCity(cityName);
+        if (coordinates) {
+            fetchWeatherData(coordinates.lat, coordinates.lon, cityName);
+        } else {
+            alert('City not found. Please try again with a different city name.');
+            searchCityBtn.disabled = false;
+            searchCityBtn.innerHTML = '<span class="icon">🔍</span> Search';
+        }
+    } catch (error) {
+        console.error('Error searching city:', error);
+        alert('Error searching for city. Please try again.');
+        searchCityBtn.disabled = false;
+        searchCityBtn.innerHTML = '<span class="icon">🔍</span> Search';
+    }
+}
+
+// Geocode city name to coordinates (US and Canada only)
+async function geocodeCity(cityName) {
+    try {
+        // Using OpenStreetMap Nominatim API for geocoding
+        const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(cityName)}&format=json&limit=5&countrycodes=us,ca`
+        );
+
+        if (!response.ok) throw new Error('Geocoding request failed');
+
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+            // Return the first result
+            return {
+                lat: parseFloat(data[0].lat),
+                lon: parseFloat(data[0].lon),
+                displayName: data[0].display_name
+            };
+        }
+
+        return null;
+    } catch (error) {
+        console.error('Geocoding error:', error);
+        throw error;
+    }
+}
+
 // Fetch weather data from Open-Meteo API
-async function fetchWeatherData(lat, lon) {
+async function fetchWeatherData(lat, lon, cityName = null) {
     try {
         // Current weather and hourly data for pressure trend
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation,cloud_cover,wind_speed_10m,surface_pressure&hourly=surface_pressure&timezone=America/Indiana/Indianapolis&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch`;
@@ -147,16 +214,25 @@ async function fetchWeatherData(lat, lon) {
         updatePrediction();
 
         // Get location name
-        fetchLocationName(lat, lon);
+        if (cityName) {
+            locationDisplay.textContent = `📍 ${cityName}`;
+        } else {
+            fetchLocationName(lat, lon);
+        }
 
-        getLocationBtn.innerHTML = '<span class="icon">📍</span> Refresh Weather Data';
+        // Re-enable buttons
+        getLocationBtn.innerHTML = '<span class="icon">📍</span> Use Current Location';
         getLocationBtn.disabled = false;
+        searchCityBtn.innerHTML = '<span class="icon">🔍</span> Search';
+        searchCityBtn.disabled = false;
 
     } catch (error) {
         console.error('Error fetching weather:', error);
         alert('Error fetching weather data. Please try again.');
         getLocationBtn.disabled = false;
-        getLocationBtn.innerHTML = '<span class="icon">📍</span> Get My Location & Weather';
+        getLocationBtn.innerHTML = '<span class="icon">📍</span> Use Current Location';
+        searchCityBtn.disabled = false;
+        searchCityBtn.innerHTML = '<span class="icon">🔍</span> Search';
     }
 }
 
