@@ -3,20 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indiana Fish Bite Predictor</title>
+    <title>Fish Bite Predictor - US & Canada</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎣 Indiana Fish Bite Predictor</h1>
-            <p class="subtitle">Find out if your favorite fish are biting based on current weather conditions</p>
+            <h1>🎣 Fish Bite Predictor</h1>
+            <p class="subtitle">Find out if your favorite fish are biting based on current weather conditions (US & Canada)</p>
         </header>
 
         <div class="location-section">
-            <button id="getLocationBtn" class="btn-primary">
-                <span class="icon">📍</span> Get My Location & Weather
-            </button>
+            <div class="location-options">
+                <button id="getLocationBtn" class="btn-primary">
+                    <span class="icon">📍</span> Use Current Location
+                </button>
+                <span class="separator">or</span>
+                <div class="city-search">
+                    <input type="text" id="cityInput" placeholder="Enter city name (US/Canada)" class="city-input">
+                    <button id="searchCityBtn" class="btn-secondary">
+                        <span class="icon">🔍</span> Search
+                    </button>
+                </div>
+            </div>
             <p id="locationDisplay" class="location-text"></p>
         </div>
 
